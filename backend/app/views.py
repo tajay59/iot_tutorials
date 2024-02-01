@@ -76,8 +76,7 @@ def get_data(start,end):
     if request.method == "GET":
         try:          
             num1 = int(start)
-            num2 = end
-            num1 * num2
+            num2 = int(end) 
             data = mongo.query(num1,num2)
             if data:
                 return jsonify({"status":"found","data": data})
