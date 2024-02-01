@@ -1,4 +1,4 @@
-# ELET2415 Starter API
+# BACKEND
 
 This template is a Python API Module.
 
