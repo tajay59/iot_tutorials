@@ -65,29 +65,19 @@ class DB:
             return True
         
 
-    def numberFrequency(self):
+    def query(self):
         '''RETURNS A LIST OF OBJECTS. EACH OBJECT CONTAINS A NUMBER AND ITS FREQUECY'''
         try:
             remotedb 	= self.remoteMongo('mongodb://%s:%s@%s:%s' % (self.username, self.password,self.server,self.port), tls=self.tls)
-            result      = list(remotedb.ELET2415.update.aggregate([ { '$group': { '_id': '$number', 'frequency': { '$sum': 1 } } }, { '$sort': { '_id': 1 } }, { '$project': { '_id': 0, 'number': '$_id', 'frequency': 1 } } ]))
+            result      = list(remotedb.ELET2415.update.aggregate([ ]))
         except Exception as e:
             msg = str(e)
-            print("numberFrequency error ",msg)
-            
+            print("query error ",msg)            
         else:                  
             return result
 
 
-    def onCount(self,LED_Name):
-        '''RETURN A COUNT OF HOW MANY TIME A SPECIFIC LED WAS TURNED ON'''
-        try:
-            remotedb 	= self.remoteMongo('mongodb://%s:%s@%s:%s' % (self.username, self.password,self.server,self.port), tls=self.tls)
-            result      = remotedb.ELET2415.update.count_documents({LED_Name:{"$eq":1}})
-        except Exception as e:
-            msg = str(e) 
-            print("onCount error ",msg)             
-        else:                  
-            return result
+
 
 
 

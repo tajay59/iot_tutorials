@@ -13,7 +13,9 @@
                             </RouterLink>
 
                             <!-- Add Links Below -->
-                                            
+                            <RouterLink class="route" :to="{ name: 'Tutorial' }" >
+                                <VBtn class="text-subtitle-2"   density="compact"  color="primary" :variant="(route.name == 'Tutorial')? 'tonal':'text'">Tutorial</VBtn>
+                            </RouterLink>                
 
                         </VCol>
                         <VCol cols="1" align="right">
