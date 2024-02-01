@@ -52,6 +52,43 @@ export const useAppStore =  defineStore('app', ()=>{
         }    
         return []         
     }
+
+    const getData = async (start,end)=> {
+        // GET REQUEST EXAMPLE
+        // FETCH REQUEST WILL TIMEOUT AFTER 20 SECONDS  
+        const controller    = new AbortController();
+        const signal        = controller.signal;
+        const id            = setTimeout(()=>{controller.abort()},60000);   
+        const URL           = `/api/data/${start}/${end}`;    // '/api/data/<start>/<end>'    
+    
+        // do not do this ---> "/api/data/${start}/${end}"
+        try {
+            const response  = await fetch(URL,{ method: 'GET', signal: signal  });                
+            if (response.ok){
+                const data      = await response.json();
+                let keys        = Object.keys(data);
+    
+                if(keys.includes("status")){
+    
+                    if(data["status"] == "found" ){
+                        // console.log(data["data"]  )  
+                        return data["data"];                                                   
+                        }
+                    if(data["status"] == "failed" ){                                                                      
+                        console.log("no data returned");
+                        } 
+                }                
+            }
+            else{                
+                const data      = await response.text();
+                console.log(data);
+            }
+        }
+        catch(err){     
+        console.error('getData  error: ', err.message);          
+        }    
+        return []         
+    }
     
     const submitText = async (start,end)=> {
         // POST REQUEST EXAMPLE - FORM DATA
@@ -95,6 +132,7 @@ export const useAppStore =  defineStore('app', ()=>{
     return { 
     // EXPORTS	
     getText,
-    submitText
+    submitText,
+    getData
        }
 },{ persist: true  });

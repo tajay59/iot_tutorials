@@ -30,7 +30,7 @@ def get_query():
     '''Returns data '''    
     if request.method == "GET":
         try:             
-            return jsonify({"status":"found","data": "Hello World!"})
+            return jsonify({"status":"found","data": "Hello World! again"})
             
         except Exception as e:
             print(f"get_query error: f{str(e)}")        
@@ -38,10 +38,57 @@ def get_query():
    
 
    
-
+@app.route('/api/number', methods=['GET']) 
+def get_query1():   
+    '''Returns data '''    
+    if request.method == "GET":
+        try:          
+            now = floor(time())  
+            return jsonify({"status":"found","data": now})
+            
+        except Exception as e:
+            print(f"get_query error: f{str(e)}")        
+    return jsonify({"status":"failed","data":[]})
  
 
+# ROUTE THAT RETURNS THE MULTIPLICATION OF TWO NUMBERS
+@app.route('/api/mul/<number1>/<number2>/<number3>', methods=['GET']) 
+def get_query2(number1, number2, number3):   
+    '''Returns data '''    
+    if request.method == "GET":
+        try:          
+            num1 = int(number1)
+            num2 = int(number2)
+            num3 = int(number3)
+            mul = num1 * num2 * num3
+            print( type(num1))
+            print(num2)
+            return jsonify({"status":"found","data": mul})
+            
+        except Exception as e:
+            print(f"get_query error: f{str(e)}")        
+    return jsonify({"status":"failed","data":[]})
 
+
+@app.route('/api/data/<start>/<end>', methods=['GET']) 
+def get_data(start,end):   
+    '''Returns data '''    
+    if request.method == "GET":
+        try:          
+            num1 = int(start)
+            num2 = end
+            num1 * num2
+            data = mongo.query(num1,num2)
+            if data:
+                return jsonify({"status":"found","data": data})
+            
+        except Exception as e:
+            print(f"get_data error: f{str(e)}")        
+    return jsonify({"status":"failed","data":[]})
+
+
+
+# START 1706798204  END 1706798219
 
 ###############################################################
 # The functions below should be applicable to all Flask apps. #

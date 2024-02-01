@@ -55,7 +55,7 @@ class DB:
         '''ADD A NEW STORAGE LOCATION TO COLLECTION'''
         try:
             remotedb 	= self.remoteMongo('mongodb://%s:%s@%s:%s' % (self.username, self.password,self.server,self.port), tls=self.tls)
-            result      = remotedb.ELET2415.update.insert_one(data)
+            result      = remotedb.ELET2415.radar.insert_one(data)
         except Exception as e:
             msg = str(e)
             if "duplicate" not in msg:
@@ -65,7 +65,20 @@ class DB:
             return True
         
 
-    def query(self):
+    def query(self,start,end):
+        '''RETURNS A LIST OF OBJECTS. EACH OBJECT CONTAINS A NUMBER AND ITS FREQUECY'''
+        try:
+            remotedb 	= self.remoteMongo('mongodb://%s:%s@%s:%s' % (self.username, self.password,self.server,self.port), tls=self.tls)
+            result      = list(remotedb.ELET2415.radar.aggregate([ { '$match': { 'timestamp': { '$gte': start, '$lte': end } } }, { '$project': { '_id': 0 } } ]))
+        except Exception as e:
+            msg = str(e)
+            print("query error ",msg)            
+        else:                  
+            return result
+
+
+
+    def query1(self):
         '''RETURNS A LIST OF OBJECTS. EACH OBJECT CONTAINS A NUMBER AND ITS FREQUECY'''
         try:
             remotedb 	= self.remoteMongo('mongodb://%s:%s@%s:%s' % (self.username, self.password,self.server,self.port), tls=self.tls)
@@ -75,9 +88,6 @@ class DB:
             print("query error ",msg)            
         else:                  
             return result
-
-
-
 
 
 
