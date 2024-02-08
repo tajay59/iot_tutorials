@@ -78,6 +78,18 @@ class DB:
 
 
 
+    def querySum(self):
+        '''RETURNS A LIST OF OBJECTS. EACH OBJECT CONTAINS A NUMBER AND ITS FREQUECY'''
+        try:
+            remotedb 	= self.remoteMongo('mongodb://%s:%s@%s:%s' % (self.username, self.password,self.server,self.port), tls=self.tls)
+            result      = list(remotedb.ELET2415.radar.aggregate([ { '$group': { '_id': None, 'average': { '$sum': '$reserve' } } } ]))
+        except Exception as e:
+            msg = str(e)
+            print("querySum error ",msg)            
+        else:                  
+            return result
+
+
     def query1(self):
         '''RETURNS A LIST OF OBJECTS. EACH OBJECT CONTAINS A NUMBER AND ITS FREQUECY'''
         try:

@@ -87,6 +87,78 @@ def get_data(start,end):
 
 
 
+@app.route('/api/reservesum', methods=['GET']) 
+def get_data_sum():   
+    '''Returns data '''    
+    if request.method == "GET":
+        try:   
+            data = mongo.querySum()
+            if data:
+                return jsonify({"status":"found","data": data})
+            
+        except Exception as e:
+            print(f"get_data error: f{str(e)}")        
+    return jsonify({"status":"failed","data":[]})
+
+###############################################################
+#                    TUTORIALS ON THURSDAY                    #
+###############################################################
+
+
+
+@app.route('/api/mul/form', methods=['POST']) # POST REQUEST WITH FORM DATA
+def get_data_post():   
+    '''Returns data '''    
+    if request.method == "POST":
+        try:  
+            # EXTRACT FORM DATA
+            form = request.form   
+
+            num1 = int(form.get('num1'))
+            num2 = int(form.get('num2')) 
+
+            print(f"Digit 1 : {num1}  Digit 2 : {num2}")
+            mul = num1 * num2
+
+            # data = mongo.query(num1,num2)
+            # if data:
+            return jsonify({"status":"complete","data": mul})
+            
+        except Exception as e:
+            print(f"get_data error: f{str(e)}")        
+    return jsonify({"status":"failed","data":[]})
+
+
+
+@app.route('/api/div/json', methods=['POST']) # POST REQUEST WITH JSON DATA
+def get_data_json_post():   
+    '''Returns data '''    
+    if request.method == "POST":
+        try:  
+            # EXTRACT FORM DATA
+            numbers = request.get_json()
+            print("Numbers ",numbers)    
+            num1 = int(numbers["num1"])
+            num2 = int(numbers["num2"])
+
+            print(f"Digit 1 : {num1}  Digit 2 : {num2}")
+
+            div = num1 / num2
+
+            # data = mongo.query(num1,num2)
+            # if data:
+            return jsonify({"status":"complete","data": div})
+            
+        except Exception as e:
+            print(f"get_data error: f{str(e)}")        
+    return jsonify({"status":"failed","data":[]})
+
+
+
+
+
+
+
 # START 1706798204  END 1706798219
 
 ###############################################################
